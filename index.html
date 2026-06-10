@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="الشاطبية 3 أشهر">
+<meta name="theme-color" content="#2D5016">
+<title>مراجعة الشاطبية – 3 أشهر</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --gold:#C8A84B; --gold-light:#E8D08A; --gold-dark:#8B6F2E;
+  --green:#2D5016; --green-light:#4A7A28;
+  --red:#8B1A1A; --ink:#1A1208;
+  --parchment:#FAF4E6; --parchment2:#F0E8D0;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+html,body{height:100%;overflow:hidden;font-family:'Cairo',sans-serif;background:var(--green);color:var(--ink);-webkit-font-smoothing:antialiased;}
+.app{display:flex;flex-direction:column;height:100dvh;background:var(--parchment);}
+.status-bar{height:var(--safe-top);background:var(--green);flex-shrink:0;}
+
+.topbar{background:linear-gradient(135deg,#1A2E0A 0%,#2D5016 100%);padding:.75rem 1rem .65rem;flex-shrink:0;border-bottom:2px solid var(--gold-dark);position:relative;}
+.topbar::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);}
+.topbar-bismillah{font-family:'Amiri',serif;font-size:.8rem;color:var(--gold-light);text-align:center;opacity:.85;margin-bottom:.2rem;}
+.topbar-title{font-family:'Amiri',serif;font-size:1.35rem;font-weight:700;color:#fff;text-align:center;}
+.topbar-title span{color:var(--gold-light);}
+.topbar-sub{font-size:.62rem;color:rgba(255,255,255,.55);text-align:center;margin-top:.15rem;font-weight:300;}
+
+.motivational{background:linear-gradient(135deg,#FAF0D0,#FFF8E7);border-bottom:1px solid rgba(200,168,75,.35);padding:.55rem 1rem;text-align:center;flex-shrink:0;position:relative;overflow:hidden;}
+.motivational::before{content:'❝';position:absolute;top:-8px;right:8px;font-size:3.5rem;color:rgba(200,168,75,.12);font-family:'Amiri',serif;line-height:1;}
+.motivational-text{font-family:'Amiri',serif;font-size:.82rem;color:var(--gold-dark);font-weight:700;line-height:1.55;position:relative;}
+
+.progress-section{background:var(--parchment2);border-bottom:1px solid rgba(200,168,75,.3);padding:.5rem 1rem;flex-shrink:0;}
+.progress-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem;}
+.progress-label{font-size:.72rem;color:var(--gold-dark);font-weight:700;}
+.progress-pct{font-family:'Amiri',serif;font-size:.85rem;color:var(--gold-dark);font-weight:700;}
+.progress-track{height:8px;background:rgba(200,168,75,.2);border-radius:20px;overflow:hidden;border:1px solid rgba(200,168,75,.25);}
+.progress-fill{height:100%;border-radius:20px;background:linear-gradient(to left,var(--gold),var(--gold-dark));transition:width .5s cubic-bezier(.4,0,.2,1);width:0%;}
+.stats-row{display:flex;gap:.35rem;margin-top:.4rem;}
+.stat-pill{flex:1;background:rgba(200,168,75,.12);border:1px solid rgba(200,168,75,.25);border-radius:8px;text-align:center;padding:.28rem .1rem;}
+.stat-pill-num{font-family:'Amiri',serif;font-size:.9rem;font-weight:700;color:var(--gold-dark);display:block;}
+.stat-pill-lbl{font-size:.56rem;color:#7a5c2e;font-weight:600;}
+
+.month-tabs{display:flex;gap:.3rem;padding:.42rem .75rem;background:var(--parchment2);border-bottom:1px solid rgba(200,168,75,.25);flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.month-tabs::-webkit-scrollbar{display:none;}
+.tab-btn{flex-shrink:0;padding:.28rem .7rem;border-radius:20px;border:1px solid rgba(200,168,75,.4);background:transparent;font-family:'Cairo',sans-serif;font-size:.7rem;font-weight:600;color:var(--gold-dark);cursor:pointer;transition:all .2s;white-space:nowrap;-webkit-appearance:none;}
+.tab-btn.active{background:var(--green);color:#fff;border-color:var(--green);}
+
+.days-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:.5rem .75rem;}
+.days-scroll::-webkit-scrollbar{width:3px;}
+.days-scroll::-webkit-scrollbar-thumb{background:rgba(200,168,75,.4);border-radius:3px;}
+
+.week-label{font-size:.67rem;font-weight:700;color:var(--gold-dark);letter-spacing:.05em;padding:.55rem .2rem .28rem;border-bottom:1px solid rgba(200,168,75,.25);margin-bottom:.3rem;display:flex;align-items:center;gap:.35rem;}
+.week-label::before{content:'◈';font-size:.6rem;}
+
+.day-card{background:#fff;border-radius:12px;margin-bottom:.4rem;border:1px solid rgba(200,168,75,.18);overflow:hidden;box-shadow:0 1px 4px rgba(26,18,8,.06);}
+.day-card.friday{background:linear-gradient(135deg,rgba(45,80,22,.07),rgba(74,122,40,.03));border-color:rgba(45,80,22,.25);}
+.day-card.final{background:linear-gradient(135deg,rgba(200,168,75,.1),rgba(139,107,46,.05));border-color:var(--gold);border-width:2px;}
+.day-card.done-card{opacity:.55;background:rgba(240,232,208,.5);}
+
+.card-top{display:flex;align-items:center;padding:.55rem .7rem;gap:.5rem;cursor:pointer;user-select:none;}
+.card-checkbox{width:24px;height:24px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;background:transparent;}
+.card-checkbox.checked{background:var(--green);border-color:var(--green);}
+.card-checkbox.checked::after{content:'✓';color:#fff;font-size:.75rem;font-weight:700;}
+.card-info{flex:1;min-width:0;}
+.card-day{font-weight:700;font-size:.85rem;color:var(--ink);display:flex;align-items:center;gap:.3rem;flex-wrap:wrap;}
+.done-card .card-day{text-decoration:line-through;color:#8a7a60;}
+.card-date{font-size:.67rem;color:#8a6a3a;margin-top:.03rem;}
+.card-verses{text-align:left;direction:ltr;font-family:'Amiri',serif;font-size:.83rem;font-weight:700;color:var(--red);flex-shrink:0;}
+.card-count{font-family:'Amiri',serif;font-size:.7rem;color:var(--gold-dark);font-weight:700;background:rgba(200,168,75,.12);border-radius:20px;padding:.07rem .38rem;flex-shrink:0;}
+
+.badge-friday{font-size:.58rem;background:var(--green);color:#fff;border-radius:10px;padding:.07rem .38rem;font-weight:600;}
+.badge-final{font-size:.58rem;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#fff;border-radius:10px;padding:.07rem .38rem;font-weight:700;}
+
+.card-expand{display:none;padding:0 .7rem .6rem;gap:.42rem;flex-direction:column;border-top:1px solid rgba(200,168,75,.15);}
+.card-expand.open{display:flex;}
+.field-label{font-size:.65rem;font-weight:700;color:var(--gold-dark);margin-bottom:.16rem;}
+textarea.field-input{width:100%;border-radius:8px;border:1px solid rgba(200,168,75,.3);padding:.38rem .52rem;font-family:'Cairo',sans-serif;font-size:.77rem;background:rgba(250,244,230,.7);color:var(--ink);resize:none;outline:none;line-height:1.5;transition:border .2s;min-height:38px;}
+textarea.field-input.needs{border-color:rgba(139,26,26,.2);background:rgba(255,245,245,.7);}
+textarea.field-input:focus{border-color:var(--gold);background:#fff;}
+textarea.field-input.needs:focus{border-color:var(--red);}
+.toggle-btn{padding:.42rem;background:var(--green);color:#fff;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:.74rem;font-weight:700;cursor:pointer;width:100%;-webkit-appearance:none;}
+
+.bottombar{background:var(--parchment2);border-top:1px solid rgba(200,168,75,.3);padding:.55rem 1rem;padding-bottom:calc(.55rem + var(--safe-bottom));display:flex;gap:.5rem;flex-shrink:0;}
+.btn-save{flex:1;padding:.63rem;background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;border:none;border-radius:12px;font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;-webkit-appearance:none;transition:transform .1s,opacity .1s;}
+.btn-save:active{transform:scale(.97);opacity:.9;}
+.btn-install{padding:.63rem .9rem;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#fff;border:none;border-radius:12px;font-family:'Cairo',sans-serif;font-size:.79rem;font-weight:700;cursor:pointer;white-space:nowrap;-webkit-appearance:none;transition:transform .1s;}
+.btn-install:active{transform:scale(.97);}
+
+.toast{position:fixed;bottom:calc(72px + var(--safe-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:#fff;font-family:'Cairo',sans-serif;font-size:.79rem;font-weight:600;padding:.48rem 1.3rem;border-radius:30px;box-shadow:0 4px 16px rgba(0,0,0,.2);opacity:0;transition:all .3s;pointer-events:none;z-index:100;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+.install-overlay{position:fixed;inset:0;background:rgba(26,18,8,.7);z-index:200;display:none;align-items:flex-end;justify-content:center;}
+.install-overlay.show{display:flex;}
+.install-box{background:var(--parchment);border-radius:20px 20px 0 0;padding:1.4rem 1.4rem calc(1.4rem + var(--safe-bottom));width:100%;max-width:480px;border:1px solid rgba(200,168,75,.4);text-align:center;}
+.install-box h3{font-family:'Amiri',serif;font-size:1.15rem;color:var(--green);margin-bottom:.9rem;}
+.install-steps{text-align:right;margin-bottom:1rem;}
+.install-step{display:flex;align-items:flex-start;gap:.55rem;margin-bottom:.6rem;font-size:.82rem;color:var(--ink);}
+.step-num{width:21px;height:21px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;flex-shrink:0;}
+.install-close{background:var(--green);color:#fff;border:none;border-radius:12px;padding:.63rem 2rem;font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;width:100%;}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="status-bar"></div>
+
+  <div class="topbar">
+    <div class="topbar-bismillah">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    <div class="topbar-title">مراجعة <span>الشاطبية</span> – 3 أشهر</div>
+    <div class="topbar-sub">حرز الأماني · 13 يونيو – 12 سبتمبر 2026 · 2:00 ظهراً · الجمعة مراجعة عامة</div>
+  </div>
+
+  <div class="motivational">
+    <div class="motivational-text">كلُّ بيتٍ تُراجعُه اليومَ سِياجٌ حولَ ما أفنيتَ الزمنَ في حفظِه</div>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-row">
+      <span class="progress-label">التقدم الكلي</span>
+      <span class="progress-pct" id="pct">0%</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="fill"></div></div>
+    <div class="stats-row">
+      <div class="stat-pill"><span class="stat-pill-num">1173</span><span class="stat-pill-lbl">بيتاً</span></div>
+      <div class="stat-pill"><span class="stat-pill-num">79</span><span class="stat-pill-lbl">يوم حفظ</span></div>
+      <div class="stat-pill"><span class="stat-pill-num">13</span><span class="stat-pill-lbl">جمعة</span></div>
+      <div class="stat-pill"><span class="stat-pill-num" id="done-count">0</span><span class="stat-pill-lbl">مكتمل</span></div>
+      <div class="stat-pill"><span class="stat-pill-num" id="remain-count">92</span><span class="stat-pill-lbl">متبقٍ</span></div>
+    </div>
+  </div>
+
+  <div class="month-tabs" id="month-tabs"></div>
+  <div class="days-scroll" id="days-scroll"></div>
+
+  <div class="bottombar">
+    <button class="btn-save" onclick="saveData()">💾 حفظ التقدم</button>
+    <button class="btn-install" id="install-btn" onclick="showInstallGuide()">📲 تثبيت</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="install-overlay" id="install-overlay" onclick="hideInstallGuide()">
+  <div class="install-box" onclick="event.stopPropagation()">
+    <h3>📲 أضف التطبيق لشاشتك</h3>
+    <div class="install-steps">
+      <div class="install-step"><div class="step-num">1</div><div id="install-step1">اضغط على زر المشاركة ↑ في أسفل المتصفح</div></div>
+      <div class="install-step"><div class="step-num">2</div><div id="install-step2">اختر "إضافة إلى الشاشة الرئيسية"</div></div>
+      <div class="install-step"><div class="step-num">3</div><div>اضغط "إضافة" وستجد أيقونة الشاطبية على شاشتك</div></div>
+    </div>
+    <button class="install-close" onclick="hideInstallGuide()">فهمت ✓</button>
+  </div>
+</div>
+
+<script>
+const WEEKS = [
+  { label: 'الأسبوع 1', days: [
+    { id:'r1', day:'السبت', date:'13 يونيو', from:1, to:15, count:15, type:'normal' },
+    { id:'r2', day:'الأحد', date:'14 يونيو', from:16, to:30, count:15, type:'normal' }
+  ] },
+  { label: 'الأسبوع 2', days: [
+    { id:'r3', day:'الاثنين', date:'15 يونيو', from:31, to:45, count:15, type:'normal' },
+    { id:'r4', day:'الثلاثاء', date:'16 يونيو', from:46, to:60, count:15, type:'normal' },
+    { id:'r5', day:'الأربعاء', date:'17 يونيو', from:61, to:75, count:15, type:'normal' },
+    { id:'r6', day:'الخميس', date:'18 يونيو', from:76, to:90, count:15, type:'normal' },
+    { id:'r7', day:'الجمعة', date:'19 يونيو', from:1, to:90, count:90, type:'friday' },
+    { id:'r8', day:'السبت', date:'20 يونيو', from:91, to:105, count:15, type:'normal' },
+    { id:'r9', day:'الأحد', date:'21 يونيو', from:106, to:120, count:15, type:'normal' }
+  ] },
+  { label: 'الأسبوع 3', days: [
+    { id:'r10', day:'الاثنين', date:'22 يونيو', from:121, to:135, count:15, type:'normal' },
+    { id:'r11', day:'الثلاثاء', date:'23 يونيو', from:136, to:150, count:15, type:'normal' },
+    { id:'r12', day:'الأربعاء', date:'24 يونيو', from:151, to:165, count:15, type:'normal' },
+    { id:'r13', day:'الخميس', date:'25 يونيو', from:166, to:180, count:15, type:'normal' },
+    { id:'r14', day:'الجمعة', date:'26 يونيو', from:1, to:180, count:180, type:'friday' },
+    { id:'r15', day:'السبت', date:'27 يونيو', from:181, to:195, count:15, type:'normal' },
+    { id:'r16', day:'الأحد', date:'28 يونيو', from:196, to:210, count:15, type:'normal' }
+  ] },
+  { label: 'الأسبوع 4', days: [
+    { id:'r17', day:'الاثنين', date:'29 يونيو', from:211, to:225, count:15, type:'normal' },
+    { id:'r18', day:'الثلاثاء', date:'30 يونيو', from:226, to:240, count:15, type:'normal' },
+    { id:'r19', day:'الأربعاء', date:'1 يوليو', from:241, to:255, count:15, type:'normal' },
+    { id:'r20', day:'الخميس', date:'2 يوليو', from:256, to:270, count:15, type:'normal' },
+    { id:'r21', day:'الجمعة', date:'3 يوليو', from:1, to:270, count:270, type:'friday' },
+    { id:'r22', day:'السبت', date:'4 يوليو', from:271, to:285, count:15, type:'normal' },
+    { id:'r23', day:'الأحد', date:'5 يوليو', from:286, to:300, count:15, type:'normal' }
+  ] },
+  { label: 'الأسبوع 5', days: [
+    { id:'r24', day:'الاثنين', date:'6 يوليو', from:301, to:315, count:15, type:'normal' },
+    { id:'r25', day:'الثلاثاء', date:'7 يوليو', from:316, to:330, count:15, type:'normal' },
+    { id:'r26', day:'الأربعاء', date:'8 يوليو', from:331, to:345, count:15, type:'normal' },
+    { id:'r27', day:'الخميس', date:'9 يوليو', from:346, to:360, count:15, type:'normal' },
+    { id:'r28', day:'الجمعة', date:'10 يوليو', from:1, to:360, count:360, type:'friday' },
+    { id:'r29', day:'السبت', date:'11 يوليو', from:361, to:375, count:15, type:'normal' },
+    { id:'r30', day:'الأحد', date:'12 يوليو', from:376, to:390, count:15, type:'normal' }
+  ] },
+  { label: 'الأسبوع 6', days: [
+    { id:'r31', day:'الاثنين', date:'13 يوليو', from:391, to:405, count:15, type:'normal' },
+    { id:'r32', day:'الثلاثاء', date:'14 يوليو', from:406, to:420, count:15, type:'normal' },
+    { id:'r33', day:'الأربعاء', date:'15 يوليو', from:421, to:435, count:15, type:'normal' },
+    { id:'r34', day:'الخميس', date:'16 يوليو', from:436, to:450, count:15, type:'normal' },
+    { id:'r35', day:'الجمعة', date:'17 يوليو', from:1, to:450, count:450, type:'friday' },
+    { id:'r36', day:'السبت', date:'18 يوليو', from:451, to:465, count:15, type:'normal' },
+    { id:'r37', day:'الأحد', date:'19 يوليو', from:466, to:480, count:15, type:'normal' }
+  ] },
+  { label: 'الأسبوع 7', days: [
+    { id:'r38', day:'الاثنين', date:'20 يوليو', from:481, to:495, count:15, type:'normal' },
+    { id:'r39', day:'الثلاثاء', date:'21 يوليو', from:496, to:510, count:15, type:'normal' },
+    { id:'r40', day:'الأربعاء', date:'22 يوليو', from:511, to:525, count:15, type:'normal' },
+    { id:'r41', day:'الخميس', date:'23 يوليو', from:526, to:540, count:15, type:'normal' },
+    { id:'r42', day:'الجمعة', date:'24 يوليو', from:1, to:540, count:540, type:'friday' },
+    { id:'r43', day:'السبت', date:'25 يوليو', from:541, to:555, count:15, type:'normal' },
+    { id:'r44', day:'الأحد', date:'26 يوليو', from:556, to:570, count:15, type:'normal' }
+  ] },
+  { label: 'الأسبوع 8', days: [
+    { id:'r45', day:'الاثنين', date:'27 يوليو', from:571, to:585, count:15, type:'normal' },
+    { id:'r46', day:'الثلاثاء', date:'28 يوليو', from:586, to:600, count:15, type:'normal' },
+    { id:'r47', day:'الأربعاء', date:'29 يوليو', from:601, to:615, count:15, type:'normal' },
+    { id:'r48', day:'الخميس', date:'30 يوليو', from:616, to:630, count:15, type:'normal' },
+    { id:'r49', day:'الجمعة', date:'31 يوليو', from:1, to:630, count:630, type:'friday' },
+    { id:'r50', day:'السبت', date:'1 أغسطس', from:631, to:645, count:15, type:'normal' },
+    { id:'r51', day:'الأحد', date:'2 أغسطس', from:646, to:660, count:15, type:'normal' }
+  ] },
+  { label: 'الأسبوع 9', days: [
+    { id:'r52', day:'الاثنين', date:'3 أغسطس', from:661, to:675, count:15, type:'normal' },
+    { id:'r53', day:'الثلاثاء', date:'4 أغسطس', from:676, to:690, count:15, type:'normal' },
+    { id:'r54', day:'الأربعاء', date:'5 أغسطس', from:691, to:705, count:15, type:'normal' },
+    { id:'r55', day:'الخميس', date:'6 أغسطس', from:706, to:720, count:15, type:'normal' },
+    { id:'r56', day:'الجمعة', date:'7 أغسطس', from:1, to:720, count:720, type:'friday' },
+    { id:'r57', day:'السبت', date:'8 أغسطس', from:721, to:735, count:15, type:'normal' },
+    { id:'r58', day:'الأحد', date:'9 أغسطس', from:736, to:750, count:15, type:'normal' }
+  ] },
+  { label: 'الأسبوع 10', days: [
+    { id:'r59', day:'الاثنين', date:'10 أغسطس', from:751, to:765, count:15, type:'normal' },
+    { id:'r60', day:'الثلاثاء', date:'11 أغسطس', from:766, to:780, count:15, type:'normal' },
+    { id:'r61', day:'الأربعاء', date:'12 أغسطس', from:781, to:795, count:15, type:'normal' },
+    { id:'r62', day:'الخميس', date:'13 أغسطس', from:796, to:810, count:15, type:'normal' },
+    { id:'r63', day:'الجمعة', date:'14 أغسطس', from:1, to:810, count:810, type:'friday' },
+    { id:'r64', day:'السبت', date:'15 أغسطس', from:811, to:825, count:15, type:'normal' },
+    { id:'r65', day:'الأحد', date:'16 أغسطس', from:826, to:839, count:14, type:'normal' }
+  ] },
+  { label: 'الأسبوع 11', days: [
+    { id:'r66', day:'الاثنين', date:'17 أغسطس', from:840, to:854, count:15, type:'normal' },
+    { id:'r67', day:'الثلاثاء', date:'18 أغسطس', from:855, to:868, count:14, type:'normal' },
+    { id:'r68', day:'الأربعاء', date:'19 أغسطس', from:869, to:883, count:15, type:'normal' },
+    { id:'r69', day:'الخميس', date:'20 أغسطس', from:884, to:897, count:14, type:'normal' },
+    { id:'r70', day:'الجمعة', date:'21 أغسطس', from:1, to:897, count:897, type:'friday' },
+    { id:'r71', day:'السبت', date:'22 أغسطس', from:898, to:912, count:15, type:'normal' },
+    { id:'r72', day:'الأحد', date:'23 أغسطس', from:913, to:926, count:14, type:'normal' }
+  ] },
+  { label: 'الأسبوع 12', days: [
+    { id:'r73', day:'الاثنين', date:'24 أغسطس', from:927, to:941, count:15, type:'normal' },
+    { id:'r74', day:'الثلاثاء', date:'25 أغسطس', from:942, to:955, count:14, type:'normal' },
+    { id:'r75', day:'الأربعاء', date:'26 أغسطس', from:956, to:970, count:15, type:'normal' },
+    { id:'r76', day:'الخميس', date:'27 أغسطس', from:971, to:984, count:14, type:'normal' },
+    { id:'r77', day:'الجمعة', date:'28 أغسطس', from:1, to:984, count:984, type:'friday' },
+    { id:'r78', day:'السبت', date:'29 أغسطس', from:985, to:999, count:15, type:'normal' },
+    { id:'r79', day:'الأحد', date:'30 أغسطس', from:1000, to:1013, count:14, type:'normal' }
+  ] },
+  { label: 'الأسبوع 13', days: [
+    { id:'r80', day:'الاثنين', date:'31 أغسطس', from:1014, to:1028, count:15, type:'normal' },
+    { id:'r81', day:'الثلاثاء', date:'1 سبتمبر', from:1029, to:1042, count:14, type:'normal' },
+    { id:'r82', day:'الأربعاء', date:'2 سبتمبر', from:1043, to:1057, count:15, type:'normal' },
+    { id:'r83', day:'الخميس', date:'3 سبتمبر', from:1058, to:1071, count:14, type:'normal' },
+    { id:'r84', day:'الجمعة', date:'4 سبتمبر', from:1, to:1071, count:1071, type:'friday' },
+    { id:'r85', day:'السبت', date:'5 سبتمبر', from:1072, to:1086, count:15, type:'normal' },
+    { id:'r86', day:'الأحد', date:'6 سبتمبر', from:1087, to:1100, count:14, type:'normal' }
+  ] },
+  { label: 'الأسبوع 14', days: [
+    { id:'r87', day:'الاثنين', date:'7 سبتمبر', from:1101, to:1115, count:15, type:'normal' },
+    { id:'r88', day:'الثلاثاء', date:'8 سبتمبر', from:1116, to:1129, count:14, type:'normal' },
+    { id:'r89', day:'الأربعاء', date:'9 سبتمبر', from:1130, to:1144, count:15, type:'normal' },
+    { id:'r90', day:'الخميس', date:'10 سبتمبر', from:1145, to:1158, count:14, type:'normal' },
+    { id:'r91', day:'الجمعة', date:'11 سبتمبر', from:1, to:1158, count:1158, type:'friday' },
+    { id:'r92', day:'السبت', date:'12 سبتمبر', from:1159, to:1173, count:15, type:'final' }
+  ] },
+];
+
+const ALL_DAYS = WEEKS.flatMap(w => w.days);
+const TOTAL = ALL_DAYS.length; // 92 (79 review + 13 friday)
+
+const MONTHS = [
+  { label: 'يونيو',   weeksIdx: [0,1,2] },
+  { label: 'يوليو',   weeksIdx: [3,4,5,6,7] },
+  { label: 'أغسطس',  weeksIdx: [8,9,10,11] },
+  { label: 'سبتمبر', weeksIdx: [12,13] },
+  { label: 'الكل',   weeksIdx: null },
+];
+
+let activeMonth = 0;
+
+function buildTabs() {
+  const tabs = document.getElementById('month-tabs');
+  MONTHS.forEach((m, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+    btn.textContent = m.label;
+    btn.onclick = () => switchMonth(i);
+    tabs.appendChild(btn);
+  });
+}
+
+function switchMonth(idx) {
+  activeMonth = idx;
+  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  renderDays();
+}
+
+function getWeeks() {
+  const m = MONTHS[activeMonth];
+  if (m.weeksIdx === null) return WEEKS;
+  return m.weeksIdx.map(i => WEEKS[i]).filter(Boolean);
+}
+
+function renderDays() {
+  const scroll = document.getElementById('days-scroll');
+  scroll.innerHTML = '';
+  getWeeks().forEach(week => {
+    const wlbl = document.createElement('div');
+    wlbl.className = 'week-label';
+    wlbl.textContent = week.label;
+    scroll.appendChild(wlbl);
+    week.days.forEach(d => {
+      const saved = getSaved(d.id);
+      const isFri = d.type === 'friday';
+      const isFinal = d.type === 'final';
+      const card = document.createElement('div');
+      card.id = 'card-' + d.id;
+      card.className = 'day-card' + (isFri ? ' friday' : '') + (isFinal ? ' final' : '') + (saved.done ? ' done-card' : '');
+      card.innerHTML = `
+        <div class="card-top" onclick="toggleExpand('${d.id}')">
+          <div class="card-checkbox ${saved.done ? 'checked' : ''}" id="cb-${d.id}"></div>
+          <div class="card-info">
+            <div class="card-day">
+              ${isFri ? '<span class="badge-friday">مراجعة عامة</span>' : ''}
+              ${isFinal ? '<span class="badge-final">🎉 ختام</span>' : ''}
+              ${d.day}
+            </div>
+            <div class="card-date">${d.date}</div>
+          </div>
+          <div class="card-verses">${d.from} – ${d.to}</div>
+          <div class="card-count">${d.count} بيت</div>
+        </div>
+        <div class="card-expand" id="exp-${d.id}">
+          <div>
+            <div class="field-label">📝 ملاحظات</div>
+            <textarea class="field-input" id="notes-${d.id}" rows="2" placeholder="اكتب ملاحظاتك هنا…" oninput="autoResize(this)">${saved.notes}</textarea>
+          </div>
+          <div>
+            <div class="field-label">⚠️ يحتاج إلى مراجعة</div>
+            <textarea class="field-input needs" id="needs-${d.id}" rows="2" placeholder="الأبيات الصعبة أو ما يحتاج تركيزاً…" oninput="autoResize(this)">${saved.needs}</textarea>
+          </div>
+          <button class="toggle-btn" onclick="toggleDone('${d.id}')">تبديل الحالة ✓</button>
+        </div>
+      `;
+      scroll.appendChild(card);
+      setTimeout(() => {
+        ['notes','needs'].forEach(f => {
+          const el = document.getElementById(f + '-' + d.id);
+          if (el && el.value) autoResize(el);
+        });
+      }, 0);
+    });
+  });
+}
+
+function toggleExpand(id) {
+  document.getElementById('exp-' + id)?.classList.toggle('open');
+}
+function autoResize(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+
+function toggleDone(id) {
+  const cb = document.getElementById('cb-' + id);
+  const card = document.getElementById('card-' + id);
+  if (!cb) return;
+  const isDone = cb.classList.toggle('checked');
+  card?.classList.toggle('done-card', isDone);
+  updateProgress();
+}
+
+function updateProgress() {
+  const data = JSON.parse(localStorage.getItem('shatibiyya_3m_v2') || '{}');
+  let done = 0;
+  ALL_DAYS.forEach(d => {
+    const cb = document.getElementById('cb-' + d.id);
+    const isDone = cb ? cb.classList.contains('checked') : (data[d.id]?.done || false);
+    if (isDone) done++;
+  });
+  const pct = Math.round((done / TOTAL) * 100);
+  document.getElementById('pct').textContent = pct + '%';
+  document.getElementById('fill').style.width = pct + '%';
+  document.getElementById('done-count').textContent = done;
+  document.getElementById('remain-count').textContent = TOTAL - done;
+}
+
+function getSaved(id) {
+  const data = JSON.parse(localStorage.getItem('shatibiyya_3m_v2') || '{}');
+  return { done: data[id]?.done || false, notes: data[id]?.notes || '', needs: data[id]?.needs || '' };
+}
+
+function saveData() {
+  const data = JSON.parse(localStorage.getItem('shatibiyya_3m_v2') || '{}');
+  ALL_DAYS.forEach(d => {
+    const cb = document.getElementById('cb-' + d.id);
+    const notes = document.getElementById('notes-' + d.id);
+    const needs = document.getElementById('needs-' + d.id);
+    data[d.id] = {
+      done: cb ? cb.classList.contains('checked') : (data[d.id]?.done || false),
+      notes: notes ? notes.value : (data[d.id]?.notes || ''),
+      needs: needs ? needs.value : (data[d.id]?.needs || ''),
+    };
+  });
+  localStorage.setItem('shatibiyya_3m_v2', JSON.stringify(data));
+  showToast('✅ تم الحفظ');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault(); deferredPrompt = e;
+  document.getElementById('install-btn').classList.add('visible');
+});
+if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+  document.getElementById('install-btn').style.display = 'block';
+}
+function showInstallGuide() {
+  if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then(() => deferredPrompt = null); return; }
+  if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+    document.getElementById('install-step1').textContent = 'اضغط زر المشاركة ↑ في Safari';
+    document.getElementById('install-step2').textContent = 'اختر "Add to Home Screen"';
+  }
+  document.getElementById('install-overlay').classList.add('show');
+}
+function hideInstallGuide() { document.getElementById('install-overlay').classList.remove('show'); }
+
+buildTabs();
+renderDays();
+updateProgress();
+</script>
+</body>
+</html>
